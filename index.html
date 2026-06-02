@@ -1,74 +1,393 @@
-<script type="module">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mongolian Aviation Academy</title>
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+<style>
 
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
 
-import {
-  getFirestore,
-  doc,
-  getDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+html{
+scroll-behavior:smooth;
+}
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBlWPLE4kqIqz-2zXYskTzF7Ad_jEM7MVQ",
-  authDomain: "maawebsite-76702.firebaseapp.com",
-  projectId: "maawebsite-76702",
-  storageBucket: "maawebsite-76702.firebasestorage.app",
-  messagingSenderId: "969050455058",
-  appId: "1:969050455058:web:330a027f5de17974102ccb",
-  measurementId: "G-57W3CBN94Y"
-};
+body{
+background:#f5f7fa;
+color:#222;
+}
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+/* HEADER */
 
-window.login = async function() {
+header{
+position:fixed;
+top:0;
+width:100%;
+background:#0a1f44;
+padding:20px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+z-index:1000;
+}
 
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+.logo{
+color:white;
+font-size:24px;
+font-weight:bold;
+}
 
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    alert("로그인 성공");
-  } catch (error) {
-    alert(error.message);
-  }
-};
+nav a{
+color:white;
+text-decoration:none;
+margin-left:25px;
+font-weight:500;
+}
 
-onAuthStateChanged(auth, async (user) => {
+nav a:hover{
+color:#4da6ff;
+}
 
-  if (!user) return;
+/* HERO */
 
-  const docRef = doc(db, "students", user.email);
-  const docSnap = await getDoc(docRef);
+.hero{
+height:100vh;
+background:
+linear-gradient(rgba(10,31,68,.75),rgba(10,31,68,.75)),
+url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1800");
+background-size:cover;
+background-position:center;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+color:white;
+padding:20px;
+}
 
-  if (docSnap.exists()) {
+.hero-content h1{
+font-size:64px;
+margin-bottom:20px;
+}
 
-    const data = docSnap.data();
+.hero-content p{
+font-size:22px;
+margin-bottom:40px;
+}
 
-    document.getElementById("userInfo").innerHTML = `
-      <h2>Welcome ${data.name}</h2>
-      <p><b>Program:</b> ${data.program}</p>
-      <p><b>Flight Hours:</b> ${data.flightHours}</p>
-      <p><b>Instructor:</b> ${data.instructor}</p>
-      <p><b>Next Flight:</b> ${data.nextFlight}</p>
-      <br>
-      <button onclick="logout()">Logout</button>
-    `;
-  } else {
-    alert("학생 데이터를 찾을 수 없습니다.");
-  }
-});
+.btn{
+display:inline-block;
+padding:15px 35px;
+background:#4da6ff;
+color:white;
+text-decoration:none;
+border-radius:8px;
+margin:10px;
+font-weight:bold;
+transition:.3s;
+}
 
-window.logout = async function() {
-  await signOut(auth);
-};
+.btn:hover{
+transform:translateY(-3px);
+}
 
-</script>
+/* SECTION */
+
+section{
+padding:100px 8%;
+}
+
+.section-title{
+text-align:center;
+font-size:42px;
+margin-bottom:50px;
+color:#0a1f44;
+}
+
+/* ABOUT */
+
+.about{
+max-width:1000px;
+margin:auto;
+text-align:center;
+font-size:20px;
+line-height:1.8;
+}
+
+/* PROGRAMS */
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.card{
+background:white;
+padding:35px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+}
+
+.card h3{
+color:#0a1f44;
+font-size:30px;
+margin-bottom:15px;
+}
+
+/* ROADMAP */
+
+.roadmap{
+display:flex;
+justify-content:center;
+align-items:center;
+flex-wrap:wrap;
+gap:15px;
+}
+
+.step{
+background:#0a1f44;
+color:white;
+padding:20px 30px;
+border-radius:10px;
+font-weight:bold;
+}
+
+.arrow{
+font-size:28px;
+color:#4da6ff;
+}
+
+/* FLEET */
+
+.fleet-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:30px;
+}
+
+.fleet{
+background:white;
+border-radius:15px;
+overflow:hidden;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.fleet img{
+width:100%;
+height:250px;
+object-fit:cover;
+}
+
+.fleet h3{
+padding:20px;
+}
+
+/* CONTACT */
+
+.contact{
+background:#0a1f44;
+color:white;
+text-align:center;
+}
+
+.contact h2{
+margin-bottom:25px;
+}
+
+.contact p{
+margin:10px 0;
+font-size:18px;
+}
+
+/* FOOTER */
+
+footer{
+background:#07142d;
+color:white;
+text-align:center;
+padding:25px;
+}
+
+@media(max-width:768px){
+
+.hero-content h1{
+font-size:42px;
+}
+
+nav{
+display:none;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+Mongolian Aviation Academy
+</div>
+
+<nav>
+<a href="#about">About</a>
+<a href="#programs">Programs</a>
+<a href="#roadmap">Roadmap</a>
+<a href="#fleet">Fleet</a>
+<a href="#contact">Contact</a>
+<a href="#">Student Portal</a>
+</nav>
+
+</header>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<h1>MONGOLIAN AVIATION ACADEMY</h1>
+
+<p>Your Way Into Aviation</p>
+
+<a href="#programs" class="btn">Start Your Pilot Journey</a>
+
+<a href="#contact" class="btn">Contact Us</a>
+
+</div>
+
+</section>
+
+<section id="about">
+
+<h2 class="section-title">About Us</h2>
+
+<div class="about">
+
+Mongolian Aviation Academy provides professional flight training programs designed to prepare future pilots for successful aviation careers.
+
+Our mission is to develop highly skilled pilots through quality training, experienced instructors, modern facilities, and practical flight experience.
+
+</div>
+
+</section>
+
+<section id="programs">
+
+<h2 class="section-title">Training Programs</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>PPL</h3>
+<p>Private Pilot Licence</p>
+</div>
+
+<div class="card">
+<h3>IR</h3>
+<p>Instrument Rating</p>
+</div>
+
+<div class="card">
+<h3>CPL</h3>
+<p>Commercial Pilot Licence</p>
+</div>
+
+<div class="card">
+<h3>CFI</h3>
+<p>Certified Flight Instructor</p>
+</div>
+
+</div>
+
+</section>
+
+<section id="roadmap">
+
+<h2 class="section-title">Pilot Career Roadmap</h2>
+
+<div class="roadmap">
+
+<div class="step">PPL</div>
+<div class="arrow">➜</div>
+
+<div class="step">IR</div>
+<div class="arrow">➜</div>
+
+<div class="step">CPL</div>
+<div class="arrow">➜</div>
+
+<div class="step">CFI</div>
+<div class="arrow">➜</div>
+
+<div class="step">Time Building</div>
+<div class="arrow">➜</div>
+
+<div class="step">Airline Pilot</div>
+
+</div>
+
+</section>
+
+<section id="fleet">
+
+<h2 class="section-title">Our Fleet</h2>
+
+<div class="fleet-grid">
+
+<div class="fleet">
+
+<img src="https://images.unsplash.com/photo-1517479149777-5f3b1511d5ad?q=80&w=1200">
+
+<h3>Cessna 172S</h3>
+
+</div>
+
+<div class="fleet">
+
+<img src="https://images.unsplash.com/photo-1544016768-982d1554f0b9?q=80&w=1200">
+
+<h3>Airbus H125</h3>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="contact" id="contact">
+
+<h2>Mongolian Aviation Academy</h2>
+
+<p>Email: info@maa.mn</p>
+
+<p>Phone: +976 XXXX XXXX</p>
+
+<p>Ulaanbaatar, Mongolia</p>
+
+<br>
+
+<a href="#" class="btn">Apply Now</a>
+
+</section>
+
+<footer>
+
+© 2026 Mongolian Aviation Academy
+
+</footer>
+
+</body>
+</html>
