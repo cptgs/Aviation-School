@@ -44,6 +44,14 @@ button{
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 import {
   getFirestore,
   doc,
@@ -59,7 +67,6 @@ const firebaseConfig = {
   appId: "1:969050455058:web:330a027f5de17974102ccb",
   measurementId: "G-57W3CBN94Y"
 };
-};
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -70,7 +77,7 @@ window.login = function() {
 
   signInWithEmailAndPassword(auth, email, password)
     .then(() => {
-      alert("로그인 성공");
+      alert("logging");
     })
     .catch((error) => {
       alert(error.message);
@@ -105,9 +112,6 @@ onAuthStateChanged(auth, async (user) => {
       `;
     }
   }
-});
-  }
-});
 
 window.logout = function(){
   signOut(auth);
