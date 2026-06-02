@@ -1,85 +1,94 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mongolian Aviation Academy</title>
-
 <style>
 body{
-    margin:0;
-    font-family:Arial, sans-serif;
-    background:#0a1f44;
-    color:white;
+  font-family:Arial,sans-serif;
+  background:#0a1f44;
+  color:white;
+  text-align:center;
+  padding-top:50px;
 }
-
-header{
-    text-align:center;
-    padding:80px 20px;
+input{
+  width:250px;
+  padding:10px;
+  margin:10px;
 }
-
-h1{
-    font-size:48px;
+button{
+  padding:10px 20px;
+  background:#4da6ff;
+  color:white;
+  border:none;
+  cursor:pointer;
 }
-
-p{
-    font-size:20px;
-}
-
-.btn{
-    display:inline-block;
-    margin-top:20px;
-    padding:12px 30px;
-    background:#4da6ff;
-    color:white;
-    text-decoration:none;
-    border-radius:8px;
-}
-
-section{
-    padding:50px;
-}
-
-.card{
-    background:white;
-    color:black;
-    padding:20px;
-    margin:20px 0;
-    border-radius:12px;
+#userInfo{
+  margin-top:20px;
 }
 </style>
 </head>
-
 <body>
 
-<header>
 <h1>Mongolian Aviation Academy</h1>
-<p>Your Way Into Aviation</p>
 
-<a href="#" class="btn">
-Student Login
-</a>
+<h2>Student Login</h2>
 
-</header>
+<input type="email" id="email" placeholder="Email"><br>
+<input type="password" id="password" placeholder="Password"><br>
 
-<section>
+<button onclick="login()">Login</button>
 
-<div class="card">
-<h2>PPL Training</h2>
-<p>Private Pilot License</p>
-</div>
+<div id="userInfo"></div>
 
-<div class="card">
-<h2>IR Training</h2>
-<p>Instrument Rating</p>
-</div>
+<script type="module">
 
-<div class="card">
-<h2>CPL Training</h2>
-<p>Commercial Pilot License</p>
-</div>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-</section>
+const firebaseConfig = {
+  apiKey: "AIzaSyBlWPLE4kqIqz-2zXYskTzF7Ad_jEM7MVQ",
+  authDomain: "maawebsite-76702.firebaseapp.com",
+  projectId: "maawebsite-76702",
+  storageBucket: "maawebsite-76702.firebasestorage.app",
+  messagingSenderId: "969050455058",
+  appId: "1:969050455058:web:330a027f5de17974102ccb"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.login = function() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  signInWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      alert("로그인 성공");
+    })
+    .catch((error) => {
+      alert(error.message);
+    });
+};
+
+onAuthStateChanged(auth, (user) => {
+  if(user){
+    document.getElementById("userInfo").innerHTML =
+      `<h3>${user.email}</h3>
+       <button onclick="logout()">Logout</button>`;
+  }
+});
+
+window.logout = function(){
+  signOut(auth);
+};
+
+</script>
 
 </body>
 </html>
