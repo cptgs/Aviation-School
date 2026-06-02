@@ -45,11 +45,10 @@ button{
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
-  getAuth,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  getFirestore,
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBlWPLE4kqIqz-2zXYskTzF7Ad_jEM7MVQ",
@@ -78,11 +77,35 @@ window.login = function() {
     });
 };
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
+
   if(user){
-    document.getElementById("userInfo").innerHTML =
-      `<h3>${user.email}</h3>
-       <button onclick="logout()">Logout</button>`;
+
+    const docRef = doc(db, "students", user.email);
+    const docSnap = await getDoc(docRef);
+
+    if(docSnap.exists()){
+
+      const data = docSnap.data();
+
+      document.getElementById("userInfo").innerHTML = `
+        <h2>Welcome ${data.name}</h2>
+
+        <p><b>Program:</b> ${data.program}</p>
+
+        <p><b>Flight Hours:</b> ${data.flightHours}</p>
+
+        <p><b>Instructor:</b> ${data.instructor}</p>
+
+        <p><b>Next Flight:</b> ${data.nextFlight}</p>
+
+        <br>
+
+        <button onclick="logout()">Logout</button>
+      `;
+    }
+  }
+});
   }
 });
 
