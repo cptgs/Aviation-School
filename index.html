@@ -1,393 +1,392 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="mn">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mongolian Aviation Academy</title>
-
+<title>Mongolian Aviation Academy — Нисэхийн дээд боловсрол</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+:root{
+  --navy:#0A2540;
+  --navy-2:#0E2E4D;
+  --blue:#1E5FA8;
+  --blue-bright:#2E7BD6;
+  --sky:#E8F1FB;
+  --sky-2:#F4F9FF;
+  --gold:#F4B942;
+  --white:#FFFFFF;
+  --ink:#0A1A2E;
+  --grey:#5A6B7D;
+  --line:rgba(10,37,64,.10);
 }
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:'Sora',sans-serif;line-height:1.1;letter-spacing:-.02em}
+.mono{font-family:'JetBrains Mono',monospace}
+a{text-decoration:none;color:inherit}
+.wrap{max-width:1200px;margin:0 auto;padding:0 28px}
 
-html{
-scroll-behavior:smooth;
+/* ---------- Nav ---------- */
+header{position:fixed;top:0;left:0;right:0;z-index:100;transition:.3s}
+header.scrolled{background:rgba(10,37,64,.92);backdrop-filter:blur(12px);box-shadow:0 1px 0 rgba(255,255,255,.08)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:76px}
+.brand{display:flex;align-items:center;gap:12px;color:var(--white)}
+.logo{width:42px;height:42px;flex:none}
+.brand-txt b{font-family:'Sora';font-weight:700;font-size:15px;letter-spacing:.01em;display:block;line-height:1.1}
+.brand-txt span{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.menu{display:flex;align-items:center;gap:34px}
+.menu a{color:rgba(255,255,255,.82);font-size:14.5px;font-weight:500;transition:.2s}
+.menu a:hover{color:var(--white)}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;padding:11px 20px;border-radius:8px;transition:.2s;cursor:pointer;border:none;font-family:'Inter'}
+.btn-gold{background:var(--gold);color:var(--navy)}
+.btn-gold:hover{background:#ffca5c;transform:translateY(-1px)}
+.btn-ghost{border:1px solid rgba(255,255,255,.3);color:var(--white)}
+.btn-ghost:hover{background:rgba(255,255,255,.1)}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none}
+.burger span{width:24px;height:2px;background:var(--white);transition:.3s}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;min-height:100vh;background:var(--navy);overflow:hidden;display:flex;align-items:center}
+.hero-bg{position:absolute;inset:0;background:
+  radial-gradient(ellipse 80% 60% at 70% 20%,rgba(46,123,214,.35),transparent 60%),
+  radial-gradient(ellipse 60% 50% at 20% 90%,rgba(30,95,168,.25),transparent 60%),
+  linear-gradient(180deg,#081d33,#0A2540)}
+/* horizon + altitude grid */
+.grid-lines{position:absolute;inset:0;opacity:.5}
+.horizon{position:absolute;left:0;right:0;bottom:18%;height:1px;background:linear-gradient(90deg,transparent,rgba(244,185,66,.5),transparent)}
+.flight-path{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
+.hero-content{position:relative;z-index:2;padding-top:90px;width:100%}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;color:var(--gold);font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;margin-bottom:24px}
+.eyebrow::before{content:"";width:30px;height:1px;background:var(--gold)}
+.hero h1{font-size:clamp(40px,6.5vw,82px);font-weight:800;color:var(--white);max-width:14ch}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero p{font-size:clamp(16px,2vw,20px);color:rgba(255,255,255,.78);max-width:52ch;margin:26px 0 38px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+.hero-stats{display:flex;gap:48px;margin-top:64px;flex-wrap:wrap}
+.stat .num{font-family:'Sora';font-size:40px;font-weight:700;color:var(--white)}
+.stat .num em{color:var(--gold);font-style:normal}
+.stat .lbl{font-size:13px;color:rgba(255,255,255,.6);margin-top:2px}
+.scroll-hint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.4);font-size:11px;letter-spacing:.2em;text-transform:uppercase;z-index:3}
+
+/* plane animation */
+@keyframes fly{0%{offset-distance:0%;opacity:0}10%{opacity:1}90%{opacity:1}100%{offset-distance:100%;opacity:0}}
+.plane{position:absolute;width:26px;height:26px;offset-path:path('M -100 700 Q 600 200 1500 -100');animation:fly 9s linear infinite;color:var(--gold)}
+
+/* ---------- Sections ---------- */
+section{position:relative}
+.pad{padding:110px 0}
+.sec-head{max-width:680px;margin-bottom:60px}
+.sec-eyebrow{color:var(--blue);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;margin-bottom:16px}
+.sec-head h2{font-size:clamp(30px,4vw,46px);font-weight:700;color:var(--navy)}
+.sec-head p{font-size:17px;color:var(--grey);margin-top:18px}
+
+/* programs */
+.prog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.prog{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:32px;transition:.3s;position:relative;overflow:hidden}
+.prog:hover{transform:translateY(-6px);box-shadow:0 24px 50px -20px rgba(10,37,64,.25);border-color:transparent}
+.prog::after{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:.3s}
+.prog:hover::after{transform:scaleX(1)}
+.prog-ico{width:54px;height:54px;border-radius:12px;background:var(--sky);display:flex;align-items:center;justify-content:center;margin-bottom:22px;color:var(--blue)}
+.prog .code{font-family:'JetBrains Mono';font-size:12px;color:var(--blue);font-weight:500}
+.prog h3{font-size:21px;margin:6px 0 12px;color:var(--navy)}
+.prog p{font-size:14.5px;color:var(--grey)}
+.prog .meta{display:flex;gap:18px;margin-top:20px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--grey)}
+.prog .meta b{color:var(--navy);font-weight:600}
+
+/* why band */
+.band{background:var(--navy);color:var(--white)}
+.band .grid-lines{opacity:.3}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;position:relative;z-index:2}
+.why h3{font-size:18px;color:var(--white);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.why h3 .n{font-family:'JetBrains Mono';font-size:13px;color:var(--gold)}
+.why p{font-size:14px;color:rgba(255,255,255,.7)}
+
+/* split feature */
+.split{display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:center}
+.split-visual{background:linear-gradient(160deg,var(--navy),var(--blue));border-radius:20px;aspect-ratio:4/3.4;position:relative;overflow:hidden;padding:34px;display:flex;flex-direction:column;justify-content:flex-end}
+.cockpit{position:absolute;inset:0;opacity:.9}
+.split-visual h4{color:var(--white);font-size:22px;position:relative;z-index:2}
+.split-visual p{color:rgba(255,255,255,.8);font-size:14px;position:relative;z-index:2;margin-top:8px}
+.feat-list{list-style:none;margin-top:28px}
+.feat-list li{display:flex;gap:16px;padding:18px 0;border-top:1px solid var(--line)}
+.feat-list li:last-child{border-bottom:1px solid var(--line)}
+.feat-list .ic{width:34px;height:34px;flex:none;border-radius:9px;background:var(--sky);color:var(--blue);display:flex;align-items:center;justify-content:center}
+.feat-list h4{font-size:16px;color:var(--navy)}
+.feat-list p{font-size:14px;color:var(--grey);margin-top:3px}
+
+/* portal CTA */
+.portal-cta{background:linear-gradient(135deg,var(--navy),#123a63);border-radius:24px;padding:64px;position:relative;overflow:hidden;text-align:center;color:var(--white)}
+.portal-cta::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,rgba(244,185,66,.18),transparent 50%)}
+.portal-cta h2{font-size:clamp(28px,3.5vw,40px);position:relative}
+.portal-cta p{color:rgba(255,255,255,.78);max-width:46ch;margin:16px auto 32px;position:relative}
+
+/* footer */
+footer{background:#06182b;color:rgba(255,255,255,.7);padding:64px 0 32px}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.2fr;gap:40px;margin-bottom:48px}
+.foot-grid h5{color:var(--white);font-family:'Sora';font-size:14px;margin-bottom:18px;letter-spacing:.02em}
+.foot-grid a{display:block;font-size:14px;margin-bottom:11px;transition:.2s}
+.foot-grid a:hover{color:var(--gold)}
+.foot-brand p{font-size:14px;margin-top:18px;max-width:34ch}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:26px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px}
+.foot-bottom .mono{color:var(--gold)}
+
+@media(max-width:920px){
+  .menu{position:fixed;top:76px;left:0;right:0;background:var(--navy-2);flex-direction:column;padding:24px;gap:18px;transform:translateY(-130%);transition:.35s;border-top:1px solid rgba(255,255,255,.1)}
+  .menu.open{transform:translateY(0)}
+  .burger{display:flex}
+  .prog-grid{grid-template-columns:1fr}
+  .why-grid{grid-template-columns:1fr 1fr;gap:30px}
+  .split{grid-template-columns:1fr;gap:36px}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .portal-cta{padding:44px 28px}
 }
-
-body{
-background:#f5f7fa;
-color:#222;
+@media(max-width:560px){
+  .why-grid,.foot-grid{grid-template-columns:1fr}
+  .hero-stats{gap:30px}
+  .pad{padding:72px 0}
 }
-
-/* HEADER */
-
-header{
-position:fixed;
-top:0;
-width:100%;
-background:#0a1f44;
-padding:20px 8%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-z-index:1000;
-}
-
-.logo{
-color:white;
-font-size:24px;
-font-weight:bold;
-}
-
-nav a{
-color:white;
-text-decoration:none;
-margin-left:25px;
-font-weight:500;
-}
-
-nav a:hover{
-color:#4da6ff;
-}
-
-/* HERO */
-
-.hero{
-height:100vh;
-background:
-linear-gradient(rgba(10,31,68,.75),rgba(10,31,68,.75)),
-url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1800");
-background-size:cover;
-background-position:center;
-display:flex;
-justify-content:center;
-align-items:center;
-text-align:center;
-color:white;
-padding:20px;
-}
-
-.hero-content h1{
-font-size:64px;
-margin-bottom:20px;
-}
-
-.hero-content p{
-font-size:22px;
-margin-bottom:40px;
-}
-
-.btn{
-display:inline-block;
-padding:15px 35px;
-background:#4da6ff;
-color:white;
-text-decoration:none;
-border-radius:8px;
-margin:10px;
-font-weight:bold;
-transition:.3s;
-}
-
-.btn:hover{
-transform:translateY(-3px);
-}
-
-/* SECTION */
-
-section{
-padding:100px 8%;
-}
-
-.section-title{
-text-align:center;
-font-size:42px;
-margin-bottom:50px;
-color:#0a1f44;
-}
-
-/* ABOUT */
-
-.about{
-max-width:1000px;
-margin:auto;
-text-align:center;
-font-size:20px;
-line-height:1.8;
-}
-
-/* PROGRAMS */
-
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
-}
-
-.card{
-background:white;
-padding:35px;
-border-radius:15px;
-box-shadow:0 5px 15px rgba(0,0,0,.1);
-transition:.3s;
-}
-
-.card:hover{
-transform:translateY(-8px);
-}
-
-.card h3{
-color:#0a1f44;
-font-size:30px;
-margin-bottom:15px;
-}
-
-/* ROADMAP */
-
-.roadmap{
-display:flex;
-justify-content:center;
-align-items:center;
-flex-wrap:wrap;
-gap:15px;
-}
-
-.step{
-background:#0a1f44;
-color:white;
-padding:20px 30px;
-border-radius:10px;
-font-weight:bold;
-}
-
-.arrow{
-font-size:28px;
-color:#4da6ff;
-}
-
-/* FLEET */
-
-.fleet-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-gap:30px;
-}
-
-.fleet{
-background:white;
-border-radius:15px;
-overflow:hidden;
-box-shadow:0 5px 15px rgba(0,0,0,.1);
-}
-
-.fleet img{
-width:100%;
-height:250px;
-object-fit:cover;
-}
-
-.fleet h3{
-padding:20px;
-}
-
-/* CONTACT */
-
-.contact{
-background:#0a1f44;
-color:white;
-text-align:center;
-}
-
-.contact h2{
-margin-bottom:25px;
-}
-
-.contact p{
-margin:10px 0;
-font-size:18px;
-}
-
-/* FOOTER */
-
-footer{
-background:#07142d;
-color:white;
-text-align:center;
-padding:25px;
-}
-
-@media(max-width:768px){
-
-.hero-content h1{
-font-size:42px;
-}
-
-nav{
-display:none;
-}
-
-}
-
 </style>
 </head>
-
 <body>
 
-<header>
-
-<div class="logo">
-Mongolian Aviation Academy
-</div>
-
-<nav>
-<a href="#about">About</a>
-<a href="#programs">Programs</a>
-<a href="#roadmap">Roadmap</a>
-<a href="#fleet">Fleet</a>
-<a href="#contact">Contact</a>
-<a href="#">Student Portal</a>
-</nav>
-
+<header id="hdr">
+  <div class="wrap nav">
+    <a href="#" class="brand">
+      <svg class="logo" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="23" stroke="#F4B942" stroke-width="1.5"/>
+        <path d="M24 8 L30 26 L24 22 L18 26 Z" fill="#F4B942"/>
+        <path d="M24 22 L24 40" stroke="#fff" stroke-width="1.5"/>
+        <path d="M16 34 L32 34" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="24" cy="24" r="2.5" fill="#2E7BD6"/>
+      </svg>
+      <span class="brand-txt"><b>Mongolian Aviation</b><span>Academy</span></span>
+    </a>
+    <nav class="menu" id="menu">
+      <a href="#programs">Хөтөлбөр</a>
+      <a href="#why">Яагаад бид</a>
+      <a href="#training">Сургалт</a>
+      <a href="#about">Тухай</a>
+      <a href="portal.html" class="btn btn-ghost">Оюутны портал</a>
+      <a href="#apply" class="btn btn-gold">Элсэлт →</a>
+    </nav>
+    <button class="burger" id="burger"><span></span><span></span><span></span></button>
+  </div>
 </header>
 
+<!-- HERO -->
 <section class="hero">
+  <div class="hero-bg"></div>
+  <div class="grid-lines">
+    <svg width="100%" height="100%" preserveAspectRatio="none">
+      <defs><pattern id="g" width="80" height="80" patternUnits="userSpaceOnUse">
+        <path d="M80 0 L0 0 0 80" fill="none" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+      </pattern></defs>
+      <rect width="100%" height="100%" fill="url(#g)"/>
+    </svg>
+    <div class="horizon"></div>
+  </div>
+  <svg class="plane" viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5C13 2.67 12.33 2 11.5 2S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
 
-<div class="hero-content">
-
-<h1>MONGOLIAN AVIATION ACADEMY</h1>
-
-<p>Your Way Into Aviation</p>
-
-<a href="#programs" class="btn">Start Your Pilot Journey</a>
-
-<a href="#contact" class="btn">Contact Us</a>
-
-</div>
-
+  <div class="wrap hero-content">
+    <div class="eyebrow">Нисэхийн салбарын дээд боловсрол · 2008 оноос</div>
+    <h1>Тэнгэрийн зам <em>эндээс</em> эхэлдэг</h1>
+    <p>Олон улсын стандартад нийцсэн нисгэгч, агаарын хөдөлгөөний удирдагч, нисэхийн инженерийн мэргэжлийн сургалт. Онолоос бодит нислэг хүртэл — нэг дээвэр дор.</p>
+    <div class="hero-cta">
+      <a href="#apply" class="btn btn-gold">Элсэлт эхэлсэн →</a>
+      <a href="portal.html" class="btn btn-ghost">Оюутны портал нэвтрэх</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="num"><em>16</em></div><div class="lbl">жилийн туршлага</div></div>
+      <div class="stat"><div class="num">2,400<em>+</em></div><div class="lbl">төгсөгч</div></div>
+      <div class="stat"><div class="num">98<em>%</em></div><div class="lbl">ажил эрхлэлт</div></div>
+      <div class="stat"><div class="num">12</div><div class="lbl">мэргэжлийн хөтөлбөр</div></div>
+    </div>
+  </div>
+  <div class="scroll-hint">Доош гүйлгэнэ үү</div>
 </section>
 
-<section id="about">
-
-<h2 class="section-title">About Us</h2>
-
-<div class="about">
-
-Mongolian Aviation Academy provides professional flight training programs designed to prepare future pilots for successful aviation careers.
-
-Our mission is to develop highly skilled pilots through quality training, experienced instructors, modern facilities, and practical flight experience.
-
-</div>
-
+<!-- PROGRAMS -->
+<section class="pad" id="programs">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Мэргэжлийн хөтөлбөр</div>
+      <h2>Карьераа сонгох эхний алхам</h2>
+      <p>Нисэхийн салбарын бүхий л чиглэлд олон улсын ICAO стандартад нийцсэн хөтөлбөрөөр суралцаарай.</p>
+    </div>
+    <div class="prog-grid">
+      <article class="prog">
+        <div class="prog-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5C13 2.67 12.33 2 11.5 2S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg></div>
+        <div class="code">PIL-101 · 4 жил</div>
+        <h3>Нисгэгчийн бэлтгэл</h3>
+        <p>CPL/ATPL лицензийн бэлтгэл, симулятор болон бодит нислэгийн дадлага хосолсон бакалаврын хөтөлбөр.</p>
+        <div class="meta"><span><b>240</b> кредит</span><span><b>200ц</b> нислэг</span></div>
+      </article>
+      <article class="prog">
+        <div class="prog-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18" stroke-dasharray="2 2"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/></svg></div>
+        <div class="code">ATC-201 · 4 жил</div>
+        <h3>Агаарын хөдөлгөөний удирдлага</h3>
+        <p>Радар, навигаци, нислэгийн зохицуулалтын мэргэжил. Бодит хяналтын цамхгийн симулятортай.</p>
+        <div class="meta"><span><b>240</b> кредит</span><span>англи хэл шаардлагатай</span></div>
+      </article>
+      <article class="prog">
+        <div class="prog-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 6l-3.5 3.5M3 21l6-6m0 0l3 3 6-6-3-3-6 6zm0 0l-3-3"/><circle cx="18" cy="6" r="3"/></svg></div>
+        <div class="code">AME-301 · 4 жил</div>
+        <h3>Нисэхийн инженер</h3>
+        <p>Агаарын хөлгийн засвар үйлчилгээ, авионик систем. EASA Part-66 модуль багтсан.</p>
+        <div class="meta"><span><b>250</b> кредит</span><span>дадлага 6 сар</span></div>
+      </article>
+      <article class="prog">
+        <div class="prog-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M8 15h4"/></svg></div>
+        <div class="code">CAB-110 · 2 жил</div>
+        <h3>Нислэгийн үйлчлэгч</h3>
+        <p>Аюулгүй байдал, зорчигчийн үйлчилгээ, онцгой нөхцлийн бэлтгэл. Олон улсын дипломтой.</p>
+        <div class="meta"><span><b>120</b> кредит</span><span>диплом</span></div>
+      </article>
+      <article class="prog">
+        <div class="prog-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+        <div class="code">AVM-220 · 4 жил</div>
+        <h3>Нисэхийн менежмент</h3>
+        <p>Нисэх буудал, агаарын тээврийн удирдлага, логистик, эдийн засгийн бакалавр.</p>
+        <div class="meta"><span><b>230</b> кредит</span><span>дадлага гадаадад</span></div>
+      </article>
+      <article class="prog">
+        <div class="prog-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div>
+        <div class="code">DRN-150 · 1 жил</div>
+        <h3>Нисгэгчгүй онгоц (UAV)</h3>
+        <p>Дрон удирдах гэрчилгээ, агаарын зураглал, хөдөө аж ахуйн хэрэглээ. Богино хугацааны курс.</p>
+        <div class="meta"><span><b>60</b> кредит</span><span>гэрчилгээ</span></div>
+      </article>
+    </div>
+  </div>
 </section>
 
-<section id="programs">
-
-<h2 class="section-title">Training Programs</h2>
-
-<div class="cards">
-
-<div class="card">
-<h3>PPL</h3>
-<p>Private Pilot Licence</p>
-</div>
-
-<div class="card">
-<h3>IR</h3>
-<p>Instrument Rating</p>
-</div>
-
-<div class="card">
-<h3>CPL</h3>
-<p>Commercial Pilot Licence</p>
-</div>
-
-<div class="card">
-<h3>CFI</h3>
-<p>Certified Flight Instructor</p>
-</div>
-
-</div>
-
+<!-- WHY -->
+<section class="pad band" id="why">
+  <div class="grid-lines"><svg width="100%" height="100%"><rect width="100%" height="100%" fill="url(#g)"/></svg></div>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow" style="color:var(--gold)">Яагаад MAA</div>
+      <h2 style="color:#fff">Тэнгэрт хүрэх найдвартай зам</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why"><h3><span class="n">01</span> ICAO стандарт</h3><p>Олон улсын иргэний нисэхийн байгууллагын шаардлагад бүрэн нийцсэн сургалтын хөтөлбөр.</p></div>
+      <div class="why"><h3><span class="n">02</span> Бодит симулятор</h3><p>Boeing 737 болон Airbus A320 төрлийн орчин үеийн нислэгийн симулятор.</p></div>
+      <div class="why"><h3><span class="n">03</span> Туршлагатай багш</h3><p>Идэвхтэй нисгэгч, удирдагч нараас шууд суралцах боломж.</p></div>
+      <div class="why"><h3><span class="n">04</span> Ажлын байр</h3><p>MIAT, Hunnu Air зэрэг түнш компаниудад дадлага хийж, ажилд орох.</p></div>
+    </div>
+  </div>
 </section>
 
-<section id="roadmap">
-
-<h2 class="section-title">Pilot Career Roadmap</h2>
-
-<div class="roadmap">
-
-<div class="step">PPL</div>
-<div class="arrow">➜</div>
-
-<div class="step">IR</div>
-<div class="arrow">➜</div>
-
-<div class="step">CPL</div>
-<div class="arrow">➜</div>
-
-<div class="step">CFI</div>
-<div class="arrow">➜</div>
-
-<div class="step">Time Building</div>
-<div class="arrow">➜</div>
-
-<div class="step">Airline Pilot</div>
-
-</div>
-
+<!-- TRAINING SPLIT -->
+<section class="pad" id="training">
+  <div class="wrap split">
+    <div class="split-visual">
+      <svg class="cockpit" viewBox="0 0 400 340" preserveAspectRatio="xMidYMid slice">
+        <rect width="400" height="340" fill="#0A2540"/>
+        <circle cx="120" cy="140" r="52" fill="none" stroke="rgba(244,185,66,.5)" stroke-width="2"/>
+        <circle cx="120" cy="140" r="52" fill="rgba(46,123,214,.15)"/>
+        <path d="M120 95 L120 185 M75 140 L165 140" stroke="rgba(255,255,255,.3)" stroke-width="1"/>
+        <path d="M95 165 L145 115" stroke="#F4B942" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="280" cy="140" r="52" fill="none" stroke="rgba(244,185,66,.5)" stroke-width="2"/>
+        <circle cx="280" cy="140" r="52" fill="rgba(46,123,214,.15)"/>
+        <path d="M280 95 L280 185 M235 140 L325 140" stroke="rgba(255,255,255,.3)" stroke-width="1"/>
+        <path d="M280 140 L305 120" stroke="#F4B942" stroke-width="2.5" stroke-linecap="round"/>
+        <rect x="60" y="230" width="280" height="6" rx="3" fill="rgba(255,255,255,.12)"/>
+        <rect x="60" y="230" width="170" height="6" rx="3" fill="#2E7BD6"/>
+      </svg>
+      <h4>Нислэгийн симуляцийн төв</h4>
+      <p>Бодит кокпит орчинд аюулгүйгээр дадлага хийнэ</p>
+    </div>
+    <div>
+      <div class="sec-eyebrow">Сургалтын онцлог</div>
+      <h2 style="font-size:38px;color:var(--navy)">Онолоос нислэг хүртэл</h2>
+      <ul class="feat-list">
+        <li>
+          <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+          <div><h4>Онолын суурь</h4><p>Аэродинамик, навигаци, цаг уур, нисэхийн хууль эрх зүйн бат бэх суурь.</p></div>
+        </li>
+        <li>
+          <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 10h20M7 15h2"/></svg></div>
+          <div><h4>Симулятор дадлага</h4><p>Бодит нислэгийн өмнө хяналттай орчинд ур чадвараа төгөлдөржүүлэх.</p></div>
+        </li>
+        <li>
+          <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8l4 4-4 4M3 12h18"/></svg></div>
+          <div><h4>Бодит нислэг</h4><p>Cessna 172 болон сургалтын онгоцоор багштай хамт нислэгийн цаг цуглуулах.</p></div>
+        </li>
+        <li>
+          <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15a4 4 0 100-8 4 4 0 000 8z"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></div>
+          <div><h4>Лиценз шалгалт</h4><p>Иргэний нисэхийн ерөнхий газрын албан ёсны лицензийн шалгалтад бэлтгэх.</p></div>
+        </li>
+      </ul>
+    </div>
+  </div>
 </section>
 
-<section id="fleet">
-
-<h2 class="section-title">Our Fleet</h2>
-
-<div class="fleet-grid">
-
-<div class="fleet">
-
-<img src="https://images.unsplash.com/photo-1517479149777-5f3b1511d5ad?q=80&w=1200">
-
-<h3>Cessna 172S</h3>
-
-</div>
-
-<div class="fleet">
-
-<img src="https://images.unsplash.com/photo-1544016768-982d1554f0b9?q=80&w=1200">
-
-<h3>Airbus H125</h3>
-
-</div>
-
-</div>
-
+<!-- PORTAL CTA -->
+<section class="pad" id="apply">
+  <div class="wrap">
+    <div class="portal-cta">
+      <h2>Оюутан байна уу? Порталдаа нэвтэрнэ үү</h2>
+      <p>Хичээлийн хуваарь, дүн, кредит, нислэгийн цагийн бүртгэлээ нэг дороос удирдаарай.</p>
+      <a href="portal.html" class="btn btn-gold">Оюутны портал руу →</a>
+    </div>
+  </div>
 </section>
 
-<section class="contact" id="contact">
-
-<h2>Mongolian Aviation Academy</h2>
-
-<p>Email: info@mongolianairways.mn</p>
-
-<p>Phone: +976 1131 1111</p>
-
-<p>4th Floor, Mongolian airways building, buyant ukhaa street Ulaanbaatar, Mongolia</p>
-
-<br>
-
-<a href="#" class="btn">Apply Now</a>
-
-</section>
-
-<footer>
-
-© 2026 Mongolian Aviation Academy 
-
+<!-- FOOTER -->
+<footer id="about">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#" class="brand">
+          <svg class="logo" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="23" stroke="#F4B942" stroke-width="1.5"/>
+            <path d="M24 8 L30 26 L24 22 L18 26 Z" fill="#F4B942"/>
+            <path d="M24 22 L24 40" stroke="#fff" stroke-width="1.5"/>
+            <path d="M16 34 L32 34" stroke="#fff" stroke-width="1.5"/>
+          </svg>
+          <span class="brand-txt"><b>Mongolian Aviation</b><span>Academy</span></span>
+        </a>
+        <p>Нисэхийн салбарын дээд боловсролын тэргүүлэгч сургууль. Улаанбаатар, Монгол улс.</p>
+      </div>
+      <div>
+        <h5>Хөтөлбөр</h5>
+        <a href="#programs">Нисгэгч</a>
+        <a href="#programs">Агаарын удирдлага</a>
+        <a href="#programs">Нисэхийн инженер</a>
+        <a href="#programs">UAV / Дрон</a>
+      </div>
+      <div>
+        <h5>Холбоосууд</h5>
+        <a href="#apply">Элсэлт</a>
+        <a href="portal.html">Оюутны портал</a>
+        <a href="#why">Тэтгэлэг</a>
+        <a href="#about">Бидний тухай</a>
+      </div>
+      <div>
+        <h5>Холбоо барих</h5>
+        <a href="tel:+97670000000">+976 7000-0000</a>
+        <a href="mailto:info@maa.edu.mn">info@maa.edu.mn</a>
+        <a href="#">Чингэлтэй дүүрэг, Улаанбаатар</a>
+        <a href="#">Даваа–Баасан 09:00–18:00</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Mongolian Aviation Academy. Бүх эрх хуулиар хамгаалагдсан.</span>
+      <span class="mono">ICAO · CAAM лиценз № A-0142</span>
+    </div>
+  </div>
 </footer>
 
+<script>
+const hdr=document.getElementById('hdr');
+addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>40));
+const burger=document.getElementById('burger'),menu=document.getElementById('menu');
+burger.addEventListener('click',()=>menu.classList.toggle('open'));
+menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>menu.classList.remove('open')));
+</script>
 </body>
 </html>
